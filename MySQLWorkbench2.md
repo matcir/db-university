@@ -114,10 +114,14 @@ JOIN QUERIES:
     `students`.`name`,
     `students`.`surname`,
     `students`.`registration_number`,
-    `exams`.`id`,
+    `exams`.`course_id`,
     MAX(`exam_student`.`vote`) AS `highest vote`,
     COUNT(`exam_student`.`vote`) AS `attempts`
     FROM `students`
     JOIN `exam_student` ON `exam_student`.`student_id` = `students`.`id`
     JOIN `exams` ON `exam_student`.`exam_id` = `exams`.`id`
-    GROUP BY `students`.`id`, `exams`.`id`;
+
+    WHERE `exam_student`.`vote` >= 18
+
+    GROUP BY `students`.`id`, `exams`.`course_id`
+    ORDER BY `students`.`name`;
